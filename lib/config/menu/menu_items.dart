@@ -43,6 +43,12 @@ const appMenuItems = <MenuItem>[
     title: 'Animated Container',
     subTitle: 'Animar un contenedor facilmente',
     link: '/animated-container',
-    icon: Icons.change_circle_outlined,
+    icon: Icons.check_box_outline_blank_rounded,
+  ),
+  MenuItem(
+    title: 'UI Controls + Tiles',
+    subTitle: 'Una serie de controles en flutter',
+    link: '/ui-controls',
+    icon: Icons.car_rental_outlined,
   ),
 ];

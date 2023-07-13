@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class AnimatedScreen extends StatelessWidget {
@@ -51,24 +52,87 @@ class _BottomNavState extends State<_BottomNav> {
   }
 }
 
-class _TutorialFH extends StatelessWidget {
+class _TutorialFH extends StatefulWidget {
   const _TutorialFH();
 
   @override
+  State<_TutorialFH> createState() => _TutorialFHState();
+}
+
+class _TutorialFHState extends State<_TutorialFH> {
+  double width = 50;
+  double height = 50;
+  Color color = Colors.indigo;
+  double borderRadius = 10.0;
+
+  void changeShape() {
+    final random = Random();
+    width = random.nextInt(300) + 120;
+    height = random.nextInt(300) + 120;
+    borderRadius = random.nextInt(100) + 20;
+    color = Color.fromRGBO(
+      random.nextInt(255), //red
+      random.nextInt(255), //green
+      random.nextInt(255), //blue
+      1, //opacity
+    );
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      color: Colors.green,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: changeShape,
+        child: Icon(Icons.play_arrow_rounded),
+      ),
+      body: Center(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInCubic,
+          width: width <= 0 ? 0 : width,
+          height: height,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius:
+                BorderRadius.circular(borderRadius < 0 ? 0 : borderRadius),
+          ),
+        ),
+      ),
     );
   }
 }
 
-class _TutorialFlutter extends StatelessWidget {
+class _TutorialFlutter extends StatefulWidget {
   const _TutorialFlutter();
 
   @override
+  State<_TutorialFlutter> createState() => _TutorialFlutterState();
+}
+
+class _TutorialFlutterState extends State<_TutorialFlutter> {
+  bool selected = false;
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      color: Colors.blue,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selected = !selected;
+        });
+      },
+      child: Center(
+        child: AnimatedContainer(
+          duration: const Duration(seconds: 2),
+          width: selected ? 200.0 : 100.0,
+          height: selected ? 100.0 : 200.0,
+          color: selected ? Colors.red : Colors.blue,
+          alignment:
+              selected ? Alignment.center : AlignmentDirectional.topCenter,
+          curve: Curves.fastOutSlowIn,
+          child: const FlutterLogo(size: 75),
+        ),
+      ),
     );
   }
 }
